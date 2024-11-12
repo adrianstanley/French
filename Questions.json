@@ -1,0 +1,90 @@
+{
+    "messages": {
+        "success": [
+            "Well done!",
+            "That's the correct answer!",
+            "You're getting good at this!",
+            "Excellent!",
+            "Bravo!"
+        ],
+        "failure": [
+            "Better luck next time.",
+            "That is not correct.",
+            "Keep trying!",
+            "Oops, not quite.",
+            "Try again!"
+        ]
+    },
+    "questions": [
+            {
+                "question": "Complétez : Je ___ (être) fatigué aujourd'hui.",
+                "options": ["suis", "es", "est", "sommes"],
+                "correct_answer": "suis",
+                "explanation": "The verb 'être' ('to be') must be conjugated in the first person singular: 'je suis'.",
+                "CEFR_level": "A1"
+            },
+            {
+                "question": "Choisissez le mot correct : Tu ___ (avoir) un stylo ?",
+                "options": ["as", "a", "avez", "ont"],
+                "correct_answer": "as",
+                "explanation": "The verb 'avoir' ('to have') is conjugated in the second person singular here: 'tu as'.",
+                "CEFR_level": "A1"
+            },
+            {
+                "question": "Complétez : Nous ___ (aller) au cinéma.",
+                "options": ["allons", "allez", "va", "vont"],
+                "correct_answer": "allons",
+                "explanation": "The verb 'aller' ('to go') in the first person plural form is 'nous allons'.",
+                "CEFR_level": "A2"
+            },
+            {
+                "question": "Quelle est la bonne forme ? Elle ___ (prendre) un taxi.",
+                "options": ["prend", "prends", "prenons", "prennent"],
+                "correct_answer": "prend",
+                "explanation": "The verb 'prendre' ('to take') in the third person singular is 'elle prend'.",
+                "CEFR_level": "A2"
+            },
+            {
+                "question": "Choisissez la bonne conjugaison : Ils ___ (faire) du sport le matin.",
+                "options": ["font", "faisons", "fait", "faites"],
+                "correct_answer": "font",
+                "explanation": "The verb 'faire' ('to do') in the third person plural is 'ils font'.",
+                "CEFR_level": "B1"
+            },
+            {
+                "question": "Complétez avec l'article correct : ___ école est fermée.",
+                "options": ["L'", "Le", "Les", "La"],
+                "correct_answer": "L'",
+                "explanation": "Since 'école' begins with a vowel, we use the elided form 'L'' instead of 'La'.",
+                "CEFR_level": "B1"
+            },
+            {
+                "question": "Choisissez la bonne forme : Il faut que tu ___ (partir) tôt.",
+                "options": ["partes", "pars", "partiez", "parte"],
+                "correct_answer": "partes",
+                "explanation": "In the subjunctive mood, 'partir' ('to leave') is conjugated as 'tu partes' for second person singular.",
+                "CEFR_level": "B2"
+            },
+            {
+                "question": "Complétez : Bien que nous ___ (être) en retard, nous y allons.",
+                "options": ["soyons", "sommes", "sois", "étions"],
+                "correct_answer": "soyons",
+                "explanation": "After 'bien que' (even though), the verb 'être' takes the subjunctive form: 'nous soyons'.",
+                "CEFR_level": "B2"
+            },
+            {
+                "question": "Quelle est la bonne réponse ? Il est important que vous ___ (savoir) la vérité.",
+                "options": ["sachiez", "savez", "sachez", "sachions"],
+                "correct_answer": "sachiez",
+                "explanation": "The verb 'savoir' ('to know') here is in the subjunctive mood, used with 'il est important que', thus 'vous sachiez'.",
+                "CEFR_level": "C1"
+            },
+            {
+                "question": "Complétez avec la bonne forme : Je doute qu'il ___ (comprendre) la situation.",
+                "options": ["comprenne", "comprends", "comprend", "comprissions"],
+                "correct_answer": "comprenne",
+                "explanation": "After 'je doute que' (I doubt that), 'comprendre' takes the subjunctive form: 'il comprenne'.",
+                "CEFR_level": "C2"
+            }
+        ]
+}
