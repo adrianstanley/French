@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>French Grammar Quiz</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        #quiz-container { max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        .option { display: block; margin: 10px 0; }
+        #feedback { margin-top: 20px; font-weight: bold; }
+        #next-btn { margin-top: 10px; }
+        .level-btn { margin: 5px; padding: 10px; }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <h2>French Grammar Quiz</h2>
+
+        <!-- Level selection -->
+        <p>Select your target CEFR level:</p>
+        <div id="level-selection">
+            <button class="level-btn" onclick="setTargetLevel('A1')">A1</button>
+            <button class="level-btn" onclick="setTargetLevel('A2')">A2</button>
+            <button class="level-btn" onclick="setTargetLevel('B1')">B1</button>
+            <button class="level-btn" onclick="setTargetLevel('B2')">B2</button>
+            <button class="level-btn" onclick="setTargetLevel('C1')">C1</button>
+            <button class="level-btn" onclick="setTargetLevel('C2')">C2</button>
+        </div>
+
+        <p id="Test-Level"></p>
+        <p id="question-text"></p>
+        <div id="options"></div>
+        <p id="feedback"></p>
+        <p id="cefr-level"></p>
+        <button id="next-btn" onclick="loadQuestion()">Next Question</button>
+    </div>
+
+    <script>
+        let questions;
+        let successMessages, failureMessages;
+
+        let currentMaxLevel = 'A2'; // Current maximum question level
+        let currentMinLevel = 'A1'; // Current minimum question level
+
+        const levels = ["A1", "A2", "B1", "B2", "C1", "C2"];
+
+
+        fetch("Questions.json")
+            .then(response => response.json())
+            .then(data => {
+                questions = data.questions;
+                successMessages = data.messages.success;
+                failureMessages = data.messages.failure;
+                loadQuestion();
+            })
+            .catch(error => console.error("Error loading JSON:", error));
+
+        function setTargetLevel(level) {
+            targetLevel = level;
+            currentMaxLevel = "A2"; // Reset to A1-A2 each time a new target is set
+            currentMinLevel = "A1";
+            loadQuestion();
+        }
+
+        function getLevelIndex(level) {
+            return levels.indexOf(level);
+        }
+
+        function loadQuestion() {
+            // Clear previous feedback
+            document.getElementById("feedback").textContent = "";
+
+
+            // Filter questions within the current min and max level range
+            const levelIndexMin = getLevelIndex(currentMinLevel);
+            const levelIndexMax = getLevelIndex(currentMaxLevel);
+            const levelQuestions = questions.filter(q => {
+                const questionLevelIndex = getLevelIndex(q.CEFR_level);
+                return questionLevelIndex >= levelIndexMin && questionLevelIndex <= levelIndexMax;
+            });
+            document.getElementById("Test-Level").textContent = "Test Question Levels: " + currentMinLevel + " to " + currentMaxLevel
+            if (levelQuestions.length === 0) {
+                document.getElementById("question-text").textContent = "No questions available for the current level range.";
+                document.getElementById("options").innerHTML = "";
+                return;
+            }
+
+            // Select a random question from the filtered list
+            const question = levelQuestions[Math.floor(Math.random() * levelQuestions.length)];
+            document.getElementById("question-text").textContent = question.question;
+            document.getElementById("cefr-level").textContent = "CEFR Level: " + question.CEFR_level;
+
+            // Display answer options
+            const optionsContainer = document.getElementById("options");
+            optionsContainer.innerHTML = "";
+            question.options.forEach(option => {
+                const button = document.createElement("button");
+                button.textContent = option;
+                button.classList.add("option");
+                button.onclick = () => checkAnswer(option, question);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedAnswer, question) {
+            const feedback = document.getElementById("feedback");
+
+            if (selectedAnswer === question.correct_answer) {
+                feedback.textContent = successMessages[Math.floor(Math.random() * successMessages.length)];
+                feedback.style.color = "green";
+
+                // Increase maximum level if at current max level and less than target
+                if (question.CEFR_level === currentMaxLevel && currentMaxLevel !== targetLevel) {
+                    currentMaxLevel = levels[getLevelIndex(currentMaxLevel) + 1]; // Increase max level by 1
+                    currentMinLevel = levels[getLevelIndex(currentMinLevel) + 1]; // Increase min level by 1
+                }
+            } else {
+                feedback.textContent = failureMessages[Math.floor(Math.random() * failureMessages.length)];
+                feedback.style.color = "red";
+
+                // Decrease both max and min level if answered incorrectly at the lowest level
+                if (getLevelIndex(currentMinLevel) > 0) {
+                    currentMinLevel = levels[Math.max(getLevelIndex(currentMinLevel) - 1, 0)];
+                    currentMaxLevel = levels[Math.max(getLevelIndex(currentMaxLevel) - 1, 0)];
+                }
+            }
+
+            feedback.innerHTML += "<br>Explanation: " + question.explanation;
+        }
+    </script>
+</body>
+</html>
